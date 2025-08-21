@@ -154,6 +154,11 @@ app.get("/", (req, res) => {
             margin-bottom: 15px;
             border-left: 4px solid #3498db;
         }
+        .endpoint div{
+          display: flex;
+          gap: 10px;
+          margin-bottom: 10px;
+        }
         
         .endpoint h4 {
             color: #2c3e50;
@@ -250,7 +255,7 @@ app.get("/", (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1>📱 PhoneX Backend API</h1>
+            <h1> PhoneX Backend API</h1>
             <p>نظام متكامل للبيع عبر الإنترنت مع إدارة الحجوزات</p>
             <span class="status">🟢 النظام يعمل بنجاح</span>
         </div>
@@ -297,38 +302,85 @@ app.get("/", (req, res) => {
             <h2>🔗 نقاط النهاية المتاحة (API Endpoints)</h2>
             
             <div class="endpoint">
-                <h4><span class="method post">POST</span> /api/auth/register</h4>
-                <p>تسجيل مستخدم جديد</p>
+                <h4>المصادقة (Auth)</h4>
+                <div><span class="method post">POST</span> /api/auth/register — تسجيل مستخدم جديد</div>
+                <div><span class="method post">POST</span> /api/auth/login — تسجيل الدخول</div>
+                <div><span class="method post">POST</span> /api/auth/refresh-token — تحديث التوكن</div>
+                <div><span class="method post">POST</span> /api/auth/forgot-password — نسيان كلمة المرور</div>
+                <div><span class="method post">POST</span> /api/auth/reset-password — إعادة تعيين كلمة المرور</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method post">POST</span> /api/auth/login</h4>
-                <p>تسجيل دخول المستخدم</p>
+                <h4>المستخدمون (Users)</h4>
+                <div><span class="method get">GET</span> /api/users — قائمة المستخدمين (Admin)</div>
+                <div><span class="method get">GET</span> /api/users/:id — مستخدم محدد (Admin)</div>
+                <div><span class="method put">PUT</span> /api/users/:id — تحديث مستخدم (Admin)</div>
+                <div><span class="method delete">DELETE</span> /api/users/:id — حذف مستخدم (Admin)</div>
+                <div><span class="method put">PUT</span> /api/users/profile/me — تحديث بروفايلك (Auth)</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method get">GET</span> /api/products</h4>
-                <p>عرض جميع المنتجات مع التصفية والبحث</p>
+                <h4>الكاتيجوريات (Categories)</h4>
+                <div><span class="method get">GET</span> /api/categories — كل الكاتيجوريات</div>
+                <div><span class="method get">GET</span> /api/categories/:id — كاتيجوري محدد</div>
+                <div><span class="method post">POST</span> /api/categories — إنشاء كاتيجوري (Admin)</div>
+                <div><span class="method put">PUT</span> /api/categories/:id — تحديث كاتيجوري (Admin)</div>
+                <div><span class="method delete">DELETE</span> /api/categories/:id — حذف كاتيجوري (Admin)</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method post">POST</span> /api/cart/add</h4>
-                <p>إضافة منتج إلى سلة التسوق</p>
+                <h4>المنتجات (Products)</h4>
+                <div><span class="method get">GET</span> /api/products — قائمة المنتجات</div>
+                <div><span class="method get">GET</span> /api/products/:id — منتج محدد</div>
+                <div><span class="method post">POST</span> /api/products — إنشاء منتج (Admin, صور)</div>
+                <div><span class="method put">PUT</span> /api/products/:id — تحديث منتج (Admin)</div>
+                <div><span class="method delete">DELETE</span> /api/products/:id — حذف منتج (Admin)</div>
+                <div><span class="method post">POST</span> /api/products/discount/category/:categoryId — خصم جماعي (Admin)</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method post">POST</span> /api/orders</h4>
-                <p>إنشاء طلب جديد</p>
+                <h4>الكارت (Cart)</h4>
+                <div><span class="method get">GET</span> /api/cart — جلب الكارت (Auth)</div>
+                <div><span class="method post">POST</span> /api/cart/add — إضافة منتج (Auth)</div>
+                <div><span class="method put">PUT</span> /api/cart/update — تحديث كمية (Auth)</div>
+                <div><span class="method delete">DELETE</span> /api/cart/remove/:itemId — حذف عنصر (Auth)</div>
+                <div><span class="method delete">DELETE</span> /api/cart/clear — تفريغ الكارت (Auth)</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method post">POST</span> /api/appointments</h4>
-                <p>حجز موعد جديد</p>
+                <h4>الطلبات (Orders)</h4>
+                <div><span class="method post">POST</span> /api/orders — إنشاء طلب (Auth)</div>
+                <div><span class="method get">GET</span> /api/orders/my-orders — طلباتي (Auth)</div>
+                <div><span class="method get">GET</span> /api/orders/my-orders/:id — طلب محدد (Auth)</div>
+                <div><span class="method get">GET</span> /api/orders — كل الطلبات (Admin)</div>
+                <div><span class="method put">PUT</span> /api/orders/:id/status — تعديل الحالة (Admin)</div>
+                <div><span class="method delete">DELETE</span> /api/orders/:id — حذف طلب (Admin)</div>
             </div>
-            
+
             <div class="endpoint">
-                <h4><span class="method get">GET</span> /api/admin/dashboard</h4>
-                <p>لوحة تحكم الأدمن مع الإحصائيات</p>
+                <h4>الحجوزات (Appointments)</h4>
+                <div><span class="method post">POST</span> /api/appointments — إنشاء حجز (Auth, صور)</div>
+                <div><span class="method get">GET</span> /api/appointments/my-appointments — حجوزاتي (Auth)</div>
+                <div><span class="method get">GET</span> /api/appointments/my-appointments/:id — حجز محدد (Auth)</div>
+                <div><span class="method put">PUT</span> /api/appointments/:id/status — حالة الحجز (Admin)</div>
+                <div><span class="method delete">DELETE</span> /api/appointments/:id — حذف حجز (Admin)</div>
+            </div>
+
+            <div class="endpoint">
+                <h4>لوحة الأدمن (Admin)</h4>
+                <div><span class="method get">GET</span> /api/admin/overview — نظرة عامة</div>
+                <div><span class="method get">GET</span> /api/admin/reports/sales — تقرير المبيعات</div>
+                <div><strong>Users</strong> → GET/GET:id/PUT:id/DELETE:id</div>
+                <div><strong>Categories</strong> → GET/POST/PUT:id/DELETE:id</div>
+                <div><strong>Products</strong> → GET/GET:id/POST/PUT:id/DELETE:id</div>
+                <div><strong>Orders</strong> → GET/GET:id/PUT:id/DELETE:id</div>
+                <div><strong>Appointments</strong> → GET/GET:id/PUT:id/DELETE:id</div>
+            </div>
+
+            <div class="endpoint">
+                <h4>أخرى</h4>
+                <div><span class="method get">GET</span> /health — فحص حالة النظام</div>
+                <div><span class="method get">GET</span> /docs — مستندات API</div>
             </div>
         </div>
         
@@ -370,12 +422,7 @@ app.get("/", (req, res) => {
             </div>
         </div>
         
-        <div class="footer">
-            <p>📚 للاطلاع على التوثيق الكامل: <a href="/docs" class="link">وثائق API التفصيلية</a></p>
-            <p>🔗 رابط API الأساسي: <a href="https://phonex-backend-kslfjt915-abdelrhmans-projects-6b934fd9.vercel.app/" class="link" target="_blank">PhoneX Backend</a></p>
-            <p>📧 للتواصل والدعم التقني</p>
-            <p>© 2024 PhoneX Backend - جميع الحقوق محفوظة</p>
-        </div>
+
     </div>
 </body>
 </html>

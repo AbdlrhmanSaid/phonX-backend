@@ -1,6 +1,33 @@
 # Link
 
-https://phonex-backend-abdlrhmansaid-abdelrhmans-projects-6b934fd9.vercel.app/
+https://phonex-backend-5w2z9tjlt-abdelrhmans-projects-6b934fd9.vercel.app/
+https://phonex-backend.vercel.app/
+
+## 🗺️ فهرس سريع للراوتات (Quick Route Index)
+
+- **Auth `/api/auth`**:
+  - `POST /register`, `POST /login`, `POST /refresh-token`, `POST /forgot-password`, `POST /reset-password`
+- **Users `/api/users`**:
+  - `GET /` (Admin), `GET /:id` (Admin), `PUT /:id` (Admin), `DELETE /:id` (Admin), `PUT /profile/me` (Auth)
+- **Categories `/api/categories`**:
+  - `GET /`, `GET /:id`, `POST /` (Admin), `PUT /:id` (Admin), `DELETE /:id` (Admin)
+- **Products `/api/products`**:
+  - `GET /`, `GET /:id`, `POST /` (Admin, images) `PUT /:id` (Admin), `DELETE /:id` (Admin), `POST /discount/category/:categoryId` (Admin)
+- **Cart `/api/cart`** (Auth):
+  - `GET /`, `POST /add`, `PUT /update`, `DELETE /remove/:itemId`, `DELETE /clear`
+- **Orders `/api/orders`**:
+  - `POST /` (Auth), `GET /my-orders` (Auth), `GET /my-orders/:id` (Auth), `GET /` (Admin), `PUT /:id/status` (Admin), `DELETE /:id` (Admin)
+- **Appointments `/api/appointments`**:
+  - `POST /` (Auth, images), `GET /my-appointments` (Auth), `GET /my-appointments/:id` (Auth), `PUT /:id/status` (Admin), `DELETE /:id` (Admin)
+- **Admin `/api/admin`** (protect + admin):
+  - Overview: `GET /overview`, Reports: `GET /reports/sales`
+  - Users: `GET /users`, `GET /users/:id`, `PUT /users/:id`, `DELETE /users/:id`
+  - Categories: `GET /categories`, `POST /categories`, `PUT /categories/:id`, `DELETE /categories/:id`
+  - Products: `GET /products`, `GET /products/:id`, `POST /products`, `PUT /products/:id`, `DELETE /products/:id`, `POST /products/discount/category/:categoryId`, `DELETE /products/discount/category/:categoryId`
+  - Orders: `GET /orders`, `GET /orders/:id`, `PUT /orders/:id`, `DELETE /orders/:id`
+  - Appointments: `GET /appointments`, `GET /appointments/:id`, `PUT /appointments/:id`, `DELETE /appointments/:id`
+
+---
 
 # 📚 وثائق API - مشروع PhoneX Backend
 
