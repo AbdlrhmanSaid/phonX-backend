@@ -1,6 +1,5 @@
 # Link
 
-https://phonex-backend-5w2z9tjlt-abdelrhmans-projects-6b934fd9.vercel.app/
 https://phonex-backend.vercel.app/
 
 ## 🗺️ فهرس سريع للراوتات (Quick Route Index)

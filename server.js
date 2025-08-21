@@ -255,7 +255,7 @@ app.get("/", (req, res) => {
 <body>
     <div class="container">
         <div class="header">
-            <h1> PhoneX Backend API</h1>
+            <h1> PhoneX Backend</h1>
             <p>نظام متكامل للبيع عبر الإنترنت مع إدارة الحجوزات</p>
             <span class="status">🟢 النظام يعمل بنجاح</span>
         </div>
