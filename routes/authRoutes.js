@@ -10,6 +10,7 @@ import {
   resetPassword,
   refreshToken,
 } from "../controllers/authController.js";
+import { googleAuth } from "../controllers/googleAuthController.js";
 
 const router = express.Router();
 
@@ -29,5 +30,7 @@ router.post("/login", authLimiter, login);
 router.post("/refresh-token", refreshToken);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+
+router.post("/google", googleAuth);
 
 export default router;

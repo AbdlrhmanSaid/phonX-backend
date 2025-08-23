@@ -1,49 +1,165 @@
-# phonX-backend
+# PhoneX Backend - API Server
 
-## نظرة عامة
+## 🚀 الإصلاحات والتحسينات الجديدة
 
-Backend لــ PhoneX: متجر إلكتروني مع نظام حجوزات وصلاحيات أدمن.
+### ✅ تم إصلاح المشاكل التالية:
 
-- **البيئة**: Node.js + Express + MongoDB (Mongoose)
-- **الأمان**: JWT, Rate Limiting, Validation, CORS
-- **الملفات**: رفع صور عبر Cloudinary و Multer
+#### 1. مشكلة تحديث رقم الهاتف
 
-## روابط مهمة
+- **المشكلة**: المستخدم لم يكن يستطيع تعديل رقم هاتفه بشكل صحيح
+- **الحل**:
+  - إضافة imports مفقودة في `updateProfile.js`
+  - تحسين منطق التحقق من صحة رقم الهاتف
+  - إضافة رسائل خطأ واضحة باللغة العربية
 
-- Base URL: `https://phonex-backend-abdlrhmansaid-abdelrhmans-projects-6b934fd9.vercel.app/`
-- Health: `GET /health`
-- Docs: `GET /docs` أو `GET /docs.md`
+#### 2. مشكلة إضافة كلمة سر لمستخدم جوجل
 
-## خريطة الراوتات السريعة
+- **المشكلة**: المستخدم من جوجل لم يكن يستطيع إضافة كلمة سر لحسابه
+- **الحل**:
+  - تحسين منطق تحديث كلمة المرور في `updateProfile.js`
+  - إضافة توجيهات واضحة في واجهة المستخدم
+  - تمييز نوع الحساب (جوجل/محلي) في واجهة التحديث
 
-- **Auth `/api/auth`**: `POST /register`, `POST /login`, `POST /refresh-token`, `POST /forgot-password`, `POST /reset-password`
-- **Users `/api/users`**: `GET /` (Admin), `GET /:id` (Admin), `PUT /:id` (Admin), `DELETE /:id` (Admin), `PUT /profile/me` (Auth)
-- **Categories `/api/categories`**: `GET /`, `GET /:id`, `POST /` (Admin), `PUT /:id` (Admin), `DELETE /:id` (Admin)
-- **Products `/api/products`**: `GET /`, `GET /:id`, `POST /` (Admin, images), `PUT /:id` (Admin), `DELETE /:id` (Admin), `POST /discount/category/:categoryId` (Admin)
-- **Cart `/api/cart`** (Auth): `GET /`, `POST /add`, `PUT /update`, `DELETE /remove/:itemId`, `DELETE /clear`
-- **Orders `/api/orders`**: `POST /` (Auth), `GET /my-orders` (Auth), `GET /my-orders/:id` (Auth), `GET /` (Admin), `PUT /:id/status` (Admin), `DELETE /:id` (Admin)
-- **Appointments `/api/appointments`**: `POST /` (Auth, images), `GET /my-appointments` (Auth), `GET /my-appointments/:id` (Auth), `PUT /:id/status` (Admin), `DELETE /:id` (Admin)
-- **Admin `/api/admin`** (Protected + Admin):
-  - Overview: `GET /overview`, Reports: `GET /reports/sales`
-  - Users: `GET /users`, `GET /users/:id`, `PUT /users/:id`, `DELETE /users/:id`
-  - Categories: `GET /categories`, `POST /categories`, `PUT /categories/:id`, `DELETE /categories/:id`
-  - Products: `GET /products`, `GET /products/:id`, `POST /products`, `PUT /products/:id`, `DELETE /products/:id`, `POST /products/discount/category/:categoryId`, `DELETE /products/discount/category/:categoryId`
-  - Orders: `GET /orders`, `GET /orders/:id`, `PUT /orders/:id`, `DELETE /orders/:id`
-  - Appointments: `GET /appointments`, `GET /appointments/:id`, `PUT /appointments/:id`, `DELETE /appointments/:id`
+#### 3. مشكلة دمج الحسابات غير المرغوب
 
-## التشغيل محليًا
+- **المشكلة**: كان يحدث دمج تلقائي للحسابات عند تسجيل الدخول بجوجل
+- **الحل**:
+  - تحسين منطق `googleAuthController.js` لمنع الدمج التلقائي
+  - إضافة رسائل خطأ واضحة عند وجود تضارب
+  - تحسين منطق التسجيل لمنع إنشاء حساب جديد بنفس البريد الإلكتروني
 
-1. انسخ `.env` (راجع `config/db.js` و `config/cloudinary.js`) واضبط المتغيرات:
-   - `MONGO_URI`, `JWT_SECRET`, `CLOUDINARY_*`, `NODE_ENV`
-2. تثبيت الحزم:
-   ```
-   npm install
-   ```
-3. التشغيل للتطوير:
-   ```
-   npm run dev
-   ```
-4. التشغيل للإنتاج:
-   ```
-   npm start
-   ```
+### 🔧 التحسينات المضافة:
+
+#### 1. تحسين معالجة الأخطاء
+
+- رسائل خطأ واضحة باللغة العربية
+- معالجة خاصة للحسابات المسجلة عبر جوجل
+- تحسين رسائل الخطأ في الفرونت إند
+
+#### 2. تحسين التحقق من البيانات
+
+- التحقق من صحة رقم الهاتف (11 رقم يبدأ بـ 01)
+- التحقق من طول كلمة المرور (6 أحرف على الأقل)
+- التحقق من طول الاسم (3 أحرف على الأقل)
+
+#### 3. تحسين الأمان
+
+- منع التشفير المزدوج لكلمات المرور
+- تحسين منطق التحقق من التوكنات
+- إضافة logging للأخطاء
+
+### 📁 الملفات المحدثة:
+
+- `controllers/updateProfile.js` - إصلاح تحديث البيانات
+- `controllers/googleAuthController.js` - تحسين منطق جوجل
+- `controllers/authController.js` - تحسين التسجيل وتسجيل الدخول
+- `models/User.js` - تحسين تشفير كلمات المرور
+- `controllers/userController.js` - تحسين استجابات API
+- `routes/userRoutes.js` - تحسين مسارات المستخدم
+
+### 🧪 اختبار الإصلاحات:
+
+#### تشغيل الاختبارات:
+
+```bash
+# تشغيل اختبارات الباك إند
+node test-auth.js
+
+# تشغيل الخادم
+npm run dev
+```
+
+#### اختبار API Endpoints:
+
+1. **تسجيل مستخدم جديد**:
+
+```bash
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Test User",
+    "email": "test@example.com",
+    "phone": "01234567890",
+    "password": "123456"
+  }'
+```
+
+2. **تسجيل الدخول**:
+
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "123456"
+  }'
+```
+
+3. **تحديث الملف الشخصي**:
+
+```bash
+curl -X PUT http://localhost:5000/api/users/profile/me \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "01123456789",
+    "governorate": "القاهرة",
+    "region": "المعادي",
+    "address": "شارع النيل"
+  }'
+```
+
+4. **إضافة كلمة مرور لمستخدم جوجل**:
+
+```bash
+curl -X PUT http://localhost:5000/api/users/profile/me \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "password": "newpassword123"
+  }'
+```
+
+5. **جلب الملف الشخصي**:
+
+```bash
+curl -X GET http://localhost:5000/api/users/profile/me \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### 🔒 الأمان:
+
+- جميع كلمات المرور مشفرة باستخدام bcrypt
+- التحقق من صحة جميع المدخلات
+- حماية من SQL Injection و XSS
+- Rate Limiting على مسارات المصادقة
+- JWT Tokens محمية ومُحدثة
+
+### 📝 ملاحظات مهمة:
+
+1. **تأكد من إعداد المتغيرات البيئية** قبل تشغيل المشروع
+2. **قاعدة البيانات** يجب أن تكون متصلة ومُعدة بشكل صحيح
+3. **جميع المسارات** محمية ومُعدة للاستخدام في الإنتاج
+4. **Google OAuth** يتطلب إعداد صحيح في Google Cloud Console
+
+### 🚀 تشغيل المشروع:
+
+```bash
+# تثبيت التبعيات
+npm install
+
+# تشغيل في وضع التطوير
+npm run dev
+
+# تشغيل في وضع الإنتاج
+npm start
+```
+
+### 📞 الدعم:
+
+إذا واجهت أي مشاكل، يرجى:
+
+1. التحقق من console logs
+2. التأكد من إعداد المتغيرات البيئية
+3. التحقق من اتصال قاعدة البيانات
+4. مراجعة ملف AUTH_SETUP.md

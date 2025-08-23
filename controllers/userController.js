@@ -14,10 +14,27 @@ export const getUsers = async (req, res) => {
 // 🟢 عرض يوزر واحد
 export const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id).select(
+      "-password -refreshTokens"
+    );
     if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      provider: user.provider,
+      image: user.image,
+      governorate: user.governorate,
+      region: user.region,
+      address: user.address,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
   } catch (error) {
+    console.error("Get user error:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -98,6 +115,48 @@ export const updateProfile = async (req, res) => {
       address: updatedUser.address,
     });
   } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// فحص حالة إكمال الملف الشخصي
+export const checkProfileCompletion = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select(
+      "-password -refreshTokens"
+    );
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const missingFields = [];
+
+    if (!user.phone) missingFields.push("رقم الهاتف");
+    if (!user.governorate) missingFields.push("المحافظة");
+    if (!user.region) missingFields.push("المنطقة");
+    if (!user.address) missingFields.push("العنوان");
+
+    const isComplete = missingFields.length === 0;
+
+    res.json({
+      isComplete,
+      missingFields,
+      message: isComplete
+        ? "الملف الشخصي مكتمل"
+        : `يرجى إكمال البيانات التالية: ${missingFields.join("، ")}`,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        provider: user.provider,
+        image: user.image,
+        governorate: user.governorate,
+        region: user.region,
+        address: user.address,
+      },
+    });
+  } catch (error) {
+    console.error("Check profile completion error:", error);
     res.status(500).json({ message: error.message });
   }
 };
